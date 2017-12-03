@@ -1,15 +1,13 @@
 {
   "name": "inline-autocomplete-textmate",
   "main": "./lib/inline-autocomplete-textmate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Inline autocompletion for TextMate 2 switchers.",
-  "keywords": [
-  ],
+  "keywords": [],
   "repository": "https://github.com/savetheclocktower/atom-inline-autocomplete-textmate",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
