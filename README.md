@@ -46,6 +46,18 @@ Yes. TextMate 2’s concept of scope-specific “character classes” is left un
 
 I also removed all features from `inline-autocomplete-textmate` that implement things not present in TextMate 2’s autocompletion, namely (a) suggesting words across all open buffers and (b) suggesting keywords for the current scope even if they aren’t present in the buffer. The first of these I might put back if people want it.
 
+## Any caveats?
+
+Yes. TextMate binds autocompletion to the <kbd>Esc</kbd> key, but <kbd>Esc</kbd> is already used for several things in Atom, so if we’re not careful we run the risk of breaking those other functions.
+
+When this package activates, we check if `inline-autocomplete-textmate:cycle` is mapped to <kbd>Esc</kbd>. If it is, we use some heuristics to limit the situations in which we trigger autocompletion:
+
+1. <kbd>Esc</kbd> can be used to dismiss the Find and Replace panel, so we skip autocompletion when any text is selected.
+2. <kbd>Esc</kbd> can be used to cancel a multi-cursor operation, so we skip autocompletion when there is more than one cursor. (Autocompletion operates only on the last cursor anyway, so this is no great loss.)
+3. <kbd>Esc</kbd> can be used to dismiss notifications, so we skip autocompletion when notifications are present.
+
+Remember: the package will only behave this way when mapped to <kbd>Esc</kbd>. If you disable the default keymap and map `inline-autocomplete-textmate:cycle` to a different key, none of these caveats apply.
+
 
 [textmate]: http://blog.macromates.com/2012/clever-completion/
 [inline-autocomplete]: https://github.com/alexchee/atom-inline-autocomplete
