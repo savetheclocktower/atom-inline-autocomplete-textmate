@@ -1,7 +1,7 @@
 
 # inline-autocomplete-textmate
 
-A spiritual fork of [`inline-autocomplete`][inline-autocomplete] that aims to work (almost) exactly like TextMate 2’s auto completion — no more and no less.
+A spiritual fork of [`inline-autocomplete`][inline-autocomplete] that aims to work (almost) exactly like TextMate 2’s autocompletion — no more and no less.
 
 I wrote it for switchers like me who want to pretend Atom is actually TextMate 2.
 
@@ -50,14 +50,13 @@ I also removed all features from `inline-autocomplete-textmate` that implement t
 
 Yes. TextMate binds autocompletion to the <kbd>Esc</kbd> key, but <kbd>Esc</kbd> is already used for several things in Atom, so if we’re not careful we run the risk of breaking those other functions.
 
-When this package activates, we check if `inline-autocomplete-textmate:cycle` is mapped to <kbd>Esc</kbd>. If it is, we use some heuristics to limit the situations in which we trigger autocompletion:
+Hence there’s a setting called “Escape-key mode” that is enabled my default. In this mode, the package will ignore an <kbd>Esc</kbd> keypress if it thinks that the user pressed it for a different reason. For example:
 
 1. <kbd>Esc</kbd> can be used to dismiss the Find and Replace panel, so we skip autocompletion when any text is selected.
 2. <kbd>Esc</kbd> can be used to cancel a multi-cursor operation, so we skip autocompletion when there is more than one cursor. (Autocompletion operates only on the last cursor anyway, so this is no great loss.)
 3. <kbd>Esc</kbd> can be used to dismiss notifications, so we skip autocompletion when notifications are present.
 
-Remember: the package will only behave this way when mapped to <kbd>Esc</kbd>. If you disable the default keymap and map `inline-autocomplete-textmate:cycle` to a different key, none of these caveats apply.
-
+If you disable the default key binding and map `inline-autocomplete-textmate:cycle` to a different key, you should disable this setting.
 
 [textmate]: http://blog.macromates.com/2012/clever-completion/
 [inline-autocomplete]: https://github.com/alexchee/atom-inline-autocomplete

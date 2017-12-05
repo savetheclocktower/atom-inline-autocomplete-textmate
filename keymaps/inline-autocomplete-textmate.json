@@ -1,5 +1,5 @@
 {
-  "atom-text-editor:not([mini])": {
+  "atom-text-editor:not([mini]):not(.autocomplete-active)": {
     "escape": "inline-autocomplete-textmate:cycle",
     "shift-escape": "inline-autocomplete-textmate:cycle-back"
   }
