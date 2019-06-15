@@ -1,7 +1,7 @@
 {
   "name": "inline-autocomplete-textmate",
   "main": "./lib/inline-autocomplete-textmate",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Inline autocompletion for TextMate 2 switchers.",
   "keywords": [],
   "repository": "https://github.com/savetheclocktower/atom-inline-autocomplete-textmate",
