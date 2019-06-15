@@ -12,5 +12,19 @@
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.12.1"
+  },
+  "configSchema": {
+    "useDefensiveMode": {
+      "title": "Use Escape-key mode",
+      "description": "When enabled, won’t try to autocomplete if it thinks you pressed Escape for another reason (e.g., to dismiss notifications). If you bind completion to a key other than Escape, you should disable this option.",
+      "type": "boolean",
+      "default": true
+    },
+    "includeCompletionsFromVisibleBuffers": {
+      "title": "Include completions from all visible buffers",
+      "description": "When disabled, only completions from the same buffer will be considered. When enabled, possible completions will be considered from other buffers that are currently visible in the same window. (Completions are suggested based on distance from the cursor, and completions in other buffers will always be considered more distant than completions from the same buffer.)",
+      "type": "boolean",
+      "default": false
+    }
   }
 }
