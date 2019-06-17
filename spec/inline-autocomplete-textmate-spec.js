@@ -85,6 +85,16 @@ describe('InlineAutocompleteTextmate', () => {
         expect(InlineAutocompleteTextmate.list).toBe(null);
       });
 
+      it('does not clobber non-word prefix characters when offering a suggestion', () => {
+        editor.setCursorScreenPosition([29, 0]);
+        editor.insertText('$interpret');
+
+        simulateEscKeyEvent();
+        expect(editor.lineTextForBufferRow(29)).toBe('$interpretBaz');
+        simulateEscKeyEvent();
+        expect(editor.lineTextForBufferRow(29)).toBe('$interpretBar');
+      });
+
     });
     describe('with a typed suffix', () => {
       it('offers completions in order of proximity when ESC is pressed', () => {
