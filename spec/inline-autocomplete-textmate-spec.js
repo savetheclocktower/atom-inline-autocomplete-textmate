@@ -112,6 +112,7 @@ describe('InlineAutocompleteTextmate', () => {
         expect(editor.lineTextForBufferRow(23)).toBe('fridayDay');
       });
     });
+
     describe('with a typed prefix and suffix', () => {
       it('offers completions in order of proximity when ESC is pressed', () => {
         editor.setCursorScreenPosition([23, 0]);
@@ -128,6 +129,87 @@ describe('InlineAutocompleteTextmate', () => {
       });
     });
   });
+
+  describe('with a front-of-word selection', () => {
+    it('ignores the selection when considering prefix and suffix, and replaces the selection when performing the first replacement', () => {
+      editor.setCursorScreenPosition([23, 0]);
+      editor.insertText('saturdayDay');
+      // select 'satur'
+      editor.setSelectedBufferRange([[23, 0], [23, 5]]);
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(23)).toBe('sundayDay');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 23, column: 3 });
+
+      // To match TextMate's behavior, `saturdayDay` itself is skipped over,
+      // even though it matches the prefix and suffix, because we shouldn't
+      // re-suggest the same thing we stared with.
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(23)).toBe('fridayDay');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 23, column: 3 });
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(23)).toBe('thursdayDay');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 23, column: 5 });
+    });
+  });
+
+  describe('with a mid-word selection', () => {
+    it('does the right thing', () => {
+      editor.setCursorScreenPosition([13, 0]);
+      editor.insertText('monthOctober');
+      // select 'Octo'
+      editor.setSelectedBufferRange([[13, 5], [13, 9]]);
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthDecember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 10 });
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthNovember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 10 });
+
+      // Skips over "October" because it's what we originally had.
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthSeptember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 11 });
+    });
+  });
+
+  describe('with an end-of-word selection', () => {
+    it('does the right thing', () => {
+      editor.setCursorScreenPosition([13, 0]);
+      editor.insertText('monthOctober');
+      // select 'October'
+      editor.setSelectedBufferRange([[13, 5], [13, 12]]);
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthDecember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 13 });
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthNovember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 13 });
+
+      // Skips over "October" because it's what we originally had.
+
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(13)).toBe('monthSeptember');
+      expect(editor.getLastSelection().isEmpty());
+      expect(editor.getCursorScreenPosition()).toEqual({ row: 13, column: 14 });
+    });
+  });
+
 
   describe('when autocompletion is invoked with two visible buffers', () => {
     beforeEach(() => {
