@@ -1,5 +1,5 @@
 'use babel';
-/* globals describe, beforeEach, afterEach, it, expect, waitsForPromise, runs, atom */
+/* globals describe, xdescribe, beforeEach, afterEach, it, expect, waitsForPromise, runs, atom */
 
 import InlineAutocompleteTextmate from '../lib/inline-autocomplete-textmate';
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
@@ -287,5 +287,30 @@ describe('InlineAutocompleteTextmate', () => {
         expect(editor.lineTextForBufferRow(13)).toBe('monthDecember');
       });
     });
+  });
+
+  // This shouldn't run every time, but it's useful to keep around as a stress
+  // test, and to see if things that seem to be performance improvements are
+  // actually performance improvements.
+  xdescribe('big file', () => {
+    beforeEach(() => {
+      waitsForPromise(() => {
+        return atom.workspace.open('document4.js');
+      });
+
+      runs(() => {
+        editor = atom.workspace.getActiveTextEditor();
+        editorElement = atom.views.getView(editor);
+      });
+    });
+
+    it('completes in a file with a very large number of candidates', () => {
+      let lastLine = editor.getBuffer().getLineCount() - 1;
+      editor.setCursorScreenPosition([lastLine, 0]);
+      editor.insertText('aba');
+      simulateEscKeyEvent();
+      expect(editor.lineTextForBufferRow(lastLine)).toBe('abattoirs');
+    });
+
   });
 });
