@@ -1,7 +1,13 @@
+/* eslint-env node */
 module.exports = {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "atom": true,
+    "module": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
