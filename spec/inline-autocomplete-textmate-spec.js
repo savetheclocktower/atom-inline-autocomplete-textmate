@@ -1,5 +1,5 @@
 'use babel';
-/* globals describe, xdescribe, beforeEach, afterEach, it, expect, waitsForPromise, runs, atom */
+/* globals describe, xdescribe, beforeEach, afterEach, it, expect, waitsForPromise, runs */
 
 import InlineAutocompleteTextmate from '../lib/inline-autocomplete-textmate';
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
