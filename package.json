@@ -4,7 +4,10 @@
   "version": "0.2.29",
   "description": "Inline autocompletion for TextMate 2 switchers.",
   "keywords": [],
-  "repository": "https://github.com/savetheclocktower/atom-inline-autocomplete-textmate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/savetheclocktower/atom-inline-autocomplete-textmate"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
