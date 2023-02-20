@@ -1,7 +1,7 @@
 {
   "name": "inline-autocomplete-textmate",
   "main": "./lib/inline-autocomplete-textmate",
-  "version": "0.2.38",
+  "version": "0.2.39",
   "description": "Inline autocompletion for TextMate 2 switchers.",
   "keywords": [],
   "repository": {
