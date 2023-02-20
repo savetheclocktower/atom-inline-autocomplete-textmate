@@ -72,9 +72,8 @@ Yes. TextMate binds autocompletion to the <kbd>Esc</kbd> key, but <kbd>Esc</kbd>
 
 Hence there’s a setting called “Escape-key mode” that is enabled by default. In this mode, the package will ignore an <kbd>Esc</kbd> keypress if it thinks that the user pressed it for a different reason. For example:
 
-1. <kbd>Esc</kbd> can be used to dismiss the Find and Replace panel, so we skip autocompletion when any text is selected.
-2. <kbd>Esc</kbd> can be used to cancel a multi-cursor operation, so we skip autocompletion when there is more than one cursor. (Autocompletion operates only on the last cursor anyway, so this is no great loss.)
-3. <kbd>Esc</kbd> can be used to dismiss notifications, so we skip autocompletion when notifications are present.
+1. <kbd>Esc</kbd> can be used to cancel a multi-cursor operation, so we skip autocompletion when there is more than one cursor. (Autocompletion operates only on the last cursor anyway, so this is no great loss.)
+2. <kbd>Esc</kbd> can be used to dismiss notifications, so we skip autocompletion when notifications are present.
 
 If you disable the default key binding and map `inline-autocomplete-textmate:cycle` to a different key, you should disable this setting.
 
