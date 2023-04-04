@@ -10,11 +10,13 @@ import InlineAutocompleteTextmate from '../lib/inline-autocomplete-textmate';
 describe('InlineAutocompleteTextmate', () => {
   let editorElement, editor;
   let simulateEscKeyEvent = ({ shift } = {}) => {
-    let event = atom.keymaps.constructor.buildKeydownEvent('escape', {
-      shift,
-      target: editorElement
-    });
-    atom.keymaps.handleKeyboardEvent(event);
+    let commandName = `inline-autocomplete-textmate:${shift ? 'cycle-back' : 'cycle'}`;
+    atom.commands.dispatch(editorElement, commandName);
+    // let event = atom.keymaps.constructor.buildKeydownEvent('escape', {
+    //   shift,
+    //   target: editorElement
+    // });
+    // atom.keymaps.handleKeyboardEvent(event);
   };
 
   beforeEach(() => {
@@ -305,11 +307,14 @@ describe('InlineAutocompleteTextmate', () => {
     });
 
     it('completes in a file with a very large number of candidates', () => {
+      let then = performance.now();
       let lastLine = editor.getBuffer().getLineCount() - 1;
       editor.setCursorScreenPosition([lastLine, 0]);
       editor.insertText('aba');
       simulateEscKeyEvent();
+      let now = performance.now();
       expect(editor.lineTextForBufferRow(lastLine)).toBe('abattoirs');
+      console.log('Time: ', `${now - then}ms`);
     });
 
   });
